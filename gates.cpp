@@ -41,7 +41,7 @@ const complex<double> sq_SWAP[16] = { 1, 0, 0, 0,
 const int X[4] = { 0,1,1,0 };
 const int E[4] = { 1,0,0,1 };
 const double d_E[4] = { 1,0,0,1 };
-const int TEST_TEN[4] = { 1,2,3,4 }; ////////////////////////////////////////delete later
+
 
 const int renumber[53] = { 23,14,22,32,8,13,21,31,40,3,7,12,20,30,39,
 46,0,2,6,11,19,29,38,45,50,1,5,10,18,28,37,44,49,52,4,
@@ -408,24 +408,11 @@ public:
 	{
 		ans_zfinal.clear();
 		ans_z0.clear();
-		//for (int i = 52; i >= 0; i--)
-		//{
-		//	ans_z0.push_back(split_bits(fst_permut, i, 1));
-		//	cout << split_bits(fst_permut, i, 1) << " ";
-		//}
-		//cout << endl << endl;
-		//for (int i = 52; i >=0; i--)
-		//{
-		//	ans_zfinal.push_back((split_bits(snd_permut, i, 1) + ans_z0[52 - i]) % 2);
-		//	cout << split_bits(snd_permut, i, 1) << " ";
-		//}
-		//cout << endl;
-
 
 		for (int i = 0; i < 53; i++)
 		{
 			ans_z0.push_back(split_bits(fst_permut, i, 1));
-			//	cout << split_bits(fst_permut, i, 1) << " ";
+			//cout << split_bits(fst_permut, i, 1) << " ";
 		}
 
 
@@ -466,9 +453,6 @@ public:
 		vector<bool> str;
 		int pos;
 		complex<double> ans = 1.0;
-		//cout << endl;
-		//for (int i : rows)
-		//	cout << i << " ";
 
 		for (int start = 0, i = 0, step; start < 53; i++, start += step) // first layer multiplication
 		{
@@ -613,7 +597,6 @@ int split_bits(const long long int target, const int in_pos, const int step)
 
 
 	int pos = 53 - in_pos - step;
-	//int pos =  in_pos + step - 1;
 	for (int i = 0; i < step - 1; i++)
 		ans = (1 | (ans << 1));
 	for (int i = 0; i < pos; i++)
@@ -657,9 +640,7 @@ long long int test_bits(vector<int> &vec)
 	ans = (ans << 2);
 	int_to_binary(ans, s);
 	ans = (ans | vec[9]);
-
 	int_to_binary(ans, s);
-
 	return ans;
 }
 
@@ -685,7 +666,7 @@ void tensor_mult(vector<T> &prev, const G *gate, int gate_num) // square matrixe
 				{
 					next[(k*gate_dim + j) + ((m* gate_dim + i)*result_dim)] =
 						prev[k + m *prev_dim] * gate[j + i * gate_dim];
-					// если комплекс умножается на инт, то вылетит
+					//  complex*int = crash
 				}
 	prev.swap(next);
 }
@@ -816,14 +797,7 @@ double idea_test(q_seq &s, const long long int N) //    NEWEST
 	i = dice(0, pow(2, 53) - 1);
 	j = dice(0, pow(2, 53) - 1);
 	s.find_state(i, j, state0, state_final);
-	//dij1 = s.find_d(i, j, state0, state_final);
-	//tmpi = i;
-	//pos = break_n_fix(i, j);
-	//state0[52 - pos] = 1 - state0[52 - pos];
-
-	//my_set.insert(make_pair(tmpi, i));
-	//
-	//quadr_sum = real(dij*conj(dij));
+	
 	for (long long int k = 0; k < N; k++)
 	{
 		for (int k = 0; k < 250; k++)
@@ -857,9 +831,7 @@ double idea_test(q_seq &s, const long long int N) //    NEWEST
 	double res;
 	res = dij + quadr_sum / (pow(2, 106) - 1) ;
 
-
 //	cout << "Answer is " << res << endl;
-
 	return res;
 }
 
@@ -872,9 +844,9 @@ int main(int argc, char *argv[])
 	s.fill_chains();
 
 
-	// operator_deomposition test
-	s.operator_decomposition(); //never uncomment this
-//	s.decomp_from_file();
+
+	s.operator_decomposition();
+	//s.decomp_from_file();
 	//s.form_decomp_file();
 
 //	cout << "Idea test:" << endl;
